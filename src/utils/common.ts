@@ -1,4 +1,9 @@
-import { mdiToggleSwitchVariant, mdiCheckCircle, mdiWindowShutter } from "@mdi/js";
+import {
+  mdiToggleSwitchVariant,
+  mdiCheckCircle,
+  mdiWindowShutter,
+  mdiLightningBolt,
+} from "@mdi/js";
 import { FALLBACK_DOMAIN_ICONS } from "@ha/data/icons";
 import * as schema from "./schema";
 import type { SupportedPlatform } from "../types/entity_data";
@@ -40,5 +45,13 @@ export const platformConstants: Record<SupportedPlatform, PlatformInfo> = {
     color: "var(--cyan-color)",
     description: "The KNX cover platform is used as an interface to shutter actuators.",
     schema: schema.coverSchema,
+  },
+  sensor: {
+    name: "Energy Sensor",
+    iconPath: mdiLightningBolt,
+    color: "var(--orange-color)",
+    description:
+      "The KNX energy sensor platform is used for energy measurement and power monitoring.",
+    schema: schema.energySensorSchema,
   },
 };

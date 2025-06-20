@@ -661,3 +661,162 @@ export const lightSchema: SettingsGroup[] = [
     ],
   },
 ];
+
+export const energySensorSchema: SettingsGroup[] = [
+  {
+    type: "settings_group",
+    heading: "Energy sensor",
+    description: "Group addresses for energy measurement sensors.",
+    selectors: [
+      {
+        name: "ga_sensor",
+        type: "group_address",
+        options: {
+          state: { required: true },
+          passive: true,
+          dptSelect: [
+            {
+              value: "13.010",
+              label: "Energy (Wh)",
+              description: "DPT 13.010 - Energy in Watt-hours",
+              dpt: { main: 13, sub: 10 },
+            },
+            {
+              value: "13.011",
+              label: "Energy (kWh)",
+              description: "DPT 13.011 - Energy in kilowatt-hours",
+              dpt: { main: 13, sub: 11 },
+            },
+            {
+              value: "13.012",
+              label: "Energy (MWh)",
+              description: "DPT 13.012 - Energy in megawatt-hours",
+              dpt: { main: 13, sub: 12 },
+            },
+            {
+              value: "235.001",
+              label: "Energy (kWh) - DPT 235",
+              description: "DPT 235.001 - Energy in kilowatt-hours with tariff info (HP/HC/Total)",
+              dpt: { main: 235, sub: 1 },
+            },
+            {
+              value: "14.000",
+              label: "Energy (J)",
+              description: "DPT 14.000 - Energy in Joules",
+              dpt: { main: 14, sub: 0 },
+            },
+            {
+              value: "14.001",
+              label: "Energy (kJ)",
+              description: "DPT 14.001 - Energy in kilojoules",
+              dpt: { main: 14, sub: 1 },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    type: "settings_group",
+    collapsible: true,
+    heading: "Sensor properties",
+    description: "Properties of the energy sensor.",
+    selectors: [
+      {
+        name: "device_class",
+        type: "selector",
+        selector: {
+          select: {
+            options: [
+              { value: "energy", label: "Energy" },
+              { value: "power", label: "Power" },
+              { value: "voltage", label: "Voltage" },
+              { value: "current", label: "Current" },
+            ],
+          },
+        },
+        label: "Device class",
+        helper: "The device class of the sensor.",
+        optional: true,
+      },
+      {
+        name: "state_class",
+        type: "selector",
+        selector: {
+          select: {
+            options: [
+              { value: "measurement", label: "Measurement" },
+              { value: "total", label: "Total" },
+              { value: "total_increasing", label: "Total Increasing" },
+            ],
+          },
+        },
+        label: "State class",
+        helper: "The state class of the sensor.",
+        optional: true,
+      },
+      {
+        name: "unit_of_measurement",
+        type: "selector",
+        selector: { text: null },
+        label: "Unit of measurement",
+        helper: "The unit of measurement for the sensor value.",
+        optional: true,
+      },
+    ],
+  },
+  {
+    type: "settings_group",
+    collapsible: true,
+    heading: "DPT 235.001 Configuration",
+    description:
+      "Special configuration for DPT 235.001 which includes both energy and tariff information.",
+    selectors: [
+      {
+        name: "dpt235_extract_mode",
+        type: "selector",
+        selector: {
+          select: {
+            options: [
+              { value: "energy_only", label: "Energy only (kWh)" },
+              { value: "tariff_only", label: "Tariff only (0=Total, 1=HP, 2=HC)" },
+              { value: "both", label: "Both energy and tariff (requires two entities)" },
+            ],
+          },
+        },
+        label: "Extraction mode",
+        helper:
+          "Choose what to extract from DPT 235.001 telegrams. Energy value in kWh or tariff information (0=Total, 1=HC, 2=HP).",
+        optional: true,
+      },
+      {
+        name: "dpt235_tariff_filter",
+        type: "selector",
+        selector: {
+          select: {
+            options: [
+              { value: "0", label: "Total (0)" },
+              { value: "1", label: "Heures Creuses (1)" },
+              { value: "2", label: "Heures Pleines (2)" },
+            ],
+          },
+        },
+        label: "Tariff filter",
+        helper:
+          "Only process telegrams with this specific tariff value. Leave empty to process all tariffs.",
+        optional: true,
+      },
+    ],
+  },
+  {
+    type: "settings_group",
+    collapsible: true,
+    heading: "State updater",
+    selectors: [
+      {
+        name: "sync_state",
+        type: "sync_state",
+      },
+    ],
+  },
+];

@@ -1,6 +1,6 @@
 export type EntityCategory = "config" | "diagnostic";
 
-export type SupportedPlatform = "switch" | "light" | "binary_sensor" | "cover";
+export type SupportedPlatform = "switch" | "light" | "binary_sensor" | "cover" | "sensor";
 
 export interface GASchema {
   write?: string;
@@ -23,7 +23,18 @@ export interface SwitchEntityData {
   sync_state: string | boolean;
 }
 
-export type KnxEntityData = SwitchEntityData;
+export interface SensorEntityData {
+  entity: BaseEntityData;
+  ga_sensor: GASchema;
+  device_class?: string;
+  state_class?: string;
+  unit_of_measurement?: string;
+  dpt235_extract_mode?: string;
+  dpt235_tariff_filter?: string;
+  sync_state: string | boolean;
+}
+
+export type KnxEntityData = SwitchEntityData | SensorEntityData;
 
 export interface EntityData {
   entity: BaseEntityData;
